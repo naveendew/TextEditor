@@ -1,0 +1,125 @@
+<resources>
+    <string name="app_name">Text Editor</string>
+
+
+    <!--play store-->
+    <string name="app_google_play_store_link">"https://play.google.com/store/apps/details?id="</string>
+    <string name="app_market_link">"market://details?id="</string>
+
+    <!--App Message-->
+    <string name="api_retry_error">Please retry!</string>
+    <string name="api_default_error">Something wrong happened!</string>
+    <string name="some_error">Some Error Occurred!</string>
+    <string name="connection_error">Internet connection lost!</string>
+
+    <!--Toolbar menus-->
+    <string name="clear">Clear</string>
+    <string name="cut">Cut</string>
+    <string name="copy">Copy</string>
+    <string name="paste">Paste</string>
+    <string name="delete">Delete</string>
+    <string name="share">Share</string>
+
+    <!--Login-->
+    <string name="login_dummy">Login Dummy</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+
+    <string name="version">"version"</string>
+
+
+    <!--Login Validation-->
+    <string name="empty_email">Please provide a non empty email.</string>
+    <string name="invalid_email">Please provide a valid email.</string>
+    <string name="empty_password">Please provide a non empty password.</string>
+
+    <!--Drawer-->
+    <string name="open_drawer">Drawer Open</string>
+    <string name="close_drawer">Drawer Close</string>
+
+    <!--Drawer Menus-->
+    <string name="about">About Me</string>
+    <string name="logout">Logout</string>
+    <string name="feed">My Feed</string>
+
+    <string name="rate_us">Rate Us</string>
+    <string name="title_activity_content_list">Content List</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="Italic"><i>I</i></string>
+    <string name="BoldItalic"><b><i>BI</i></b></string>
+
+    <string name="register"><u><b><i>Copyright</i></b></u></string>
+    <string name="save">save</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="no_internet_content">Unable to connect to internet.Saving Data Locally.</string>
+    <string name="agree">OK</string>
+    <string name="disagree">CANCEL</string>
+    <string name="preview">preview</string>
+    <string name="no_internet_content_preview">No Internet Connection Detected. Please get online to preview.</string>
+    <string name="dialog_error_title">Sorry</string>
+    <string name="title_permissions">Permissions</string>
+    <string name="permission_not_accepted_storage">Sorry, you cannot add images without accepting this permission. We need it to get your editor working.</string>
+    <string name="oops">OOPS ...</string>
+    <string name="error_uploading">Some error occurs uploading data ! Please try again ...</string>
+    <string name="exit">Exit ?</string>
+    <string name="are_yot_sure">Are you sure ? want to exit the Editor ?</string>
+    <string name="naveen_dewangan">Naveen Dewangan</string>
+    <string name="dew_naveen_gmail_com">dew.naveen@gmail.com</string>
+    <string name="text_editor">Text Editor</string>
+    <string name="enter_heading">Enter Heading</string>
+    <string name="enter_content">Enter Content</string>
+
+    <string name="res_missing">Some Resources are missing from local storage. Please connect to internet to get all resources.</string>
+    <string name="refresh">Refresh</string>
+
+    <string name="about_me_hfr">
+
+        Android, Web, UI/UX Developer
+
+    </string>
+
+    <string name="about_me_profile">
+
+        \n• Developed 10+ fully functional applications for Android devices, 5+ landed to Play Store.
+\n• Expert in the interaction between various devices and versions of Android.
+\n• Proficient understanding of Google’s Material Design principles and interface guidelines.
+\n• Expert in translating any designs and wireframes into high-quality code.
+\n• Working Knowledge of Fragments, Service, Intents, Broadcast Receivers, Content Providers, JSON, Gson, REST API’s, Data Binding in Android.
+\n• Advance Android development using Rxjava2, Dependency Injection(Dagger2, Butterknife), EventBus(GreenRobot), Kotlin.
+\n• Memory mgmt and optimization using Threading, Asynctask, Leakcanary, Yourkit.
+\n• Working knowledge of Android MVP, MVVM(Data Binding) architecture.
+\n• Hands on experience of Proguard, Google Analytics, Firebase, ACRA.
+\n• Proficient in integrating SDK like. FCM, Facebook Graph, One signal.
+\n• Used Android Database SQLite, Room, Realm, GreenDao.
+\n• Backend development using Laravel/Lumen Framework with PHP.
+\n• Basic knowledge of Automated unit testing, Functional testing (Espresso, Appium, Mockito).
+
+    </string>
+    <string name="about_me">
+
+        \n A FORWARD-THINKER TECHNOLOGY ENTHUSIAST DEVELOPER HAVING MORE THAN 4 YEARS OF EXPERIENCE IN DEVELOPING MOBILE and WEB ENTERPRISE APPLICATIONS.
+EXPERIENCE IN FOUNDING STARTUP, LEADING A TECHNICAL TEAM. EX-IBMER, TCSER.
+
+\n\n SOLID UNDERSTANDING OF FULL MOBILE AND SOFTWARE DEVELOPMENT LIFE CYCLES, UIX, WEB ANALYTICS, CHANGING WEB STANDARDS, AND AGILE METHODOLOGIES.
+DEDICATED TO CONTINUOUSLY DEVELOPING, IMPLEMENTING, AND ADOPTING NEW TECHNOLOGIES TO MAXIMISE DEVELOPMENT EFFICIENCY AND PRODUCE INNOVATIVE APPLICATIONS.
+
+\n\n ACTIVELY LOOKING FOR NEW OPPORTUNITIES TO LEVERAGE MY EXPERIENCE IN THE STARTUP WORLD.
+
+    </string>
+    <string name="profile_highlights">Profile Highlights</string>
+    <string name="title_activity_portfolio">My Portfolio</string>
+    <string name="my_portfolio">My Portfolio</string>
+    <string name="view_resume">View Resume</string>
+    <string name="contact_me">Contact Me</string>
+    <string name="success">Internet Available ! Showing Data from Server.</string>
+    <string name="no_internet_available">No Internet Connection. Showing Offline Data.</string>
+    <string name="upload_success">Data Uploaded Succesfully to Server.</string>
+    <string name="upload_success_local">Data updated offline.</string>
+
+    <!--
+    ♦
+-->
+</resources>
+

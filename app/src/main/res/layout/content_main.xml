@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/editTextHdr"
+                style="@style/TextStyle.Medium.Bold"
+                android:hint="@string/enter_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:ellipsize="end"
+                android:lines="2"
+                android:maxLines="2"
+                android:textColor="@color/black" />
+
+            <com.dewnaveen.texteditor.ui.custom.TextEditor
+                android:id="@+id/editText"
+                android:hint="@string/enter_content"
+                style="@style/TextStyle.Normal.Regular"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/editTextHdr"
+                android:textColor="@color/dark_gray" />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/edit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:visibility="visible">
+
+        <Button
+            android:background="@drawable/btn_rect_trans_black"
+            android:textColor="@color/black"
+            android:id="@+id/bold"
+            android:textStyle="bold"
+            android:layout_width="@dimen/material_component_dialogs_elevation"
+            android:layout_height="@dimen/material_component_dialogs_elevation"
+            android:text="B" />
+
+        <Button
+            android:background="@drawable/btn_rect_trans_black"
+            android:textColor="@color/black"
+            android:textStyle="normal"
+            android:layout_width="@dimen/material_component_dialogs_elevation"
+            android:layout_height="@dimen/material_component_dialogs_elevation"
+            android:id="@+id/italic"
+            android:text="@string/Italic" />
+
+        <Button
+            android:id="@+id/boldItalic"
+            android:background="@drawable/btn_rect_trans_black"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="@dimen/material_component_dialogs_elevation"
+            android:layout_height="@dimen/material_component_dialogs_elevation"
+            android:text="@string/BoldItalic" />
+
+        <Button
+            android:id="@+id/normal"
+            android:background="@drawable/btn_rect_trans_black"
+            android:textColor="@color/black"
+            android:textStyle="normal"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/material_component_dialogs_elevation"
+            android:text="Normal" />
+
+        <Button
+            android:id="@+id/image"
+            android:background="@drawable/btn_rect_trans_black"
+            android:textColor="@color/black"
+            android:textStyle="normal"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/material_component_dialogs_elevation"
+            android:text="Image" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

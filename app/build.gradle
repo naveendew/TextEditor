@@ -1,0 +1,116 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+
+android {
+    compileSdkVersion rootProject.ext.targetSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        applicationId "com.dewnaveen.texteditor"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://www.dewnaveen.info/api\"")
+            buildConfigField("String", "API_KEY", "\"XXXXXXXXXX\"")
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"http://www.dewnaveen.info/api\"")
+            buildConfigField("String", "API_KEY", "\"XXXXXXXXXX\"")
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+    compile "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
+
+// font
+    compile "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
+
+// network
+    compile "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
+
+// image
+    compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+
+// parser
+    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+// dependency injection
+    compile "com.google.dagger:dagger:$rootProject.dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.8"
+    provided 'javax.annotation:jsr250-api:1.0'
+    compile 'javax.inject:javax.inject:1'
+
+// reactive
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+
+// code generator for view
+    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+
+// logger
+    compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
+// facebook
+    compile "com.facebook.android:facebook-android-sdk:$rootProject.facebookVersion"
+
+// firebase
+    compile "com.google.firebase:firebase-auth:$rootProject.firebaseauthVersion"
+    compile "com.google.android.gms:play-services-auth:$rootProject.playauthVersion"
+
+// network
+    compile "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
+
+    // rx2firebase
+    compile "com.github.frangsierra:rx2firebase:$rootProject.rx2firebaseVersion"
+
+    // picasso
+    compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+    //Okhttp
+    compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+
+    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+    compile "org.jsoup:jsoup:$rootProject.jsoupVersion"
+
+    //Crop Imageview
+    compile "com.github.yalantis:ucrop:$rootProject.cropImageVersion"
+
+    //Custom Dialog
+    implementation "com.afollestad.material-dialogs:core:$rootProject.matDialogVersion"
+
+    //Toasty
+    compile "com.sdsmdg.tastytoast:tastytoast:$rootProject.toastyVersion"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+}
+
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$supportLibraryVersion"
+}
+//apply plugin: 'com.google.gms.google-services'
+

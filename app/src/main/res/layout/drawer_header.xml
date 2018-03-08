@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/service_details_card"
+        android:background="@drawable/hdr_bg"
+        android:orientation="vertical"
+        />
+    <RelativeLayout
+        android:id="@+id/rel_nav"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/service_details_card"
+        android:alpha="0.5"
+        android:background="@color/black"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_alignBottom="@+id/rel_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_vertical_margin">
+
+        <com.dewnaveen.texteditor.ui.custom.RoundedImageView
+            android:id="@+id/iv_profile_pic"
+            android:padding="@dimen/tab_space_top"
+            android:layout_width="@dimen/nav_profile_height"
+            android:layout_height="@dimen/nav_profile_height"
+            android:scaleType="fitCenter"
+            android:src="@drawable/profile_pic" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextStyle.XSmall.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_margin_half"
+            android:text="@string/naveen_dewangan"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            style="@style/TextStyle.Small.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dew_naveen_gmail_com"
+            android:textColor="@color/grey_200" />
+
+    </LinearLayout>
+
+</RelativeLayout>

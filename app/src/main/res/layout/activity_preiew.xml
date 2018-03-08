@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.preview.PreviewActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/maincontainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary">
+
+            <TextView
+                android:padding="@dimen/material_layout_button_padding"
+                android:layout_margin="@dimen/material_layout_button_padding"
+                android:gravity="center"
+                android:id="@+id/htmlHdrTextView"
+                style="@style/TextStyle.Medium.Bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_activity_content_list"
+                android:textColor="@color/white" />
+            </LinearLayout>
+
+            <TextView
+                android:padding="@dimen/material_layout_button_padding"
+                android:id="@+id/htmlTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                style="@style/TextStyle.Normal.Regular"
+                android:textColor="@color/dark_gray" />
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

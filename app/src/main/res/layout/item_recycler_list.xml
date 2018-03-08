@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginLeft="@dimen/material_component_grid_lists_padding_big"
+    android:layout_marginRight="@dimen/material_component_grid_lists_padding_big"
+    android:layout_marginTop="@dimen/material_component_dialogs_padding_around_buttons"
+    app:cardCornerRadius="@dimen/material_component_grid_lists_padding_big"
+    app:cardElevation="@dimen/material_component_button_corner_radius"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="false">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="0dp">
+
+        <View
+            android:layout_width="@dimen/material_component_grid_lists_padding_big"
+            android:layout_height="fill_parent"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/material_component_bottom_sheet_edge_top_bottom_margins">
+
+
+            <ImageView
+                android:id="@+id/img_user"
+                android:layout_width="@dimen/material_component_grid_lists_header_footer_height"
+                android:layout_height="@dimen/material_component_floating_action_button_mini_size"
+                android:padding="0dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/asset_paper" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/material_component_lists_padding_above_list">
+
+
+                <TextView
+                    android:id="@+id/item_txt_title"
+                    style="@style/TextStyle.XSmall.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="item_txt_title"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/item_txt_message"
+                    style="@style/TextStyle.Small.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:lines="2"
+                    android:text="item_txt_message"
+                    android:textColor="@color/grey_500" />
+
+
+                    <TextView
+                        android:layout_gravity="end"
+                        android:id="@+id/item_txt_time"
+                        style="@style/TextStyle.Small.Regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/material_component_grid_lists_padding_small"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="time"
+                        android:textColor="@color/colorPrimary" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
+
+

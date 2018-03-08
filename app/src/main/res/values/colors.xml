@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <color name="colorPrimary">@color/blue_black_light</color>
+    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="light_gray">#dbdbdb</color>
+    <color name="gray">#7e7e7e</color>
+    <color name="semi_gray">#979797</color>
+    <color name="dark_gray">#696969</color>
+    <color name="bg_color">#f7f7f7</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black_effective">#2a2a2a</color>
+    <color name="shadow">#d0d8dc</color>
+    <color name="transparent">#00000000</color>
+    <color name="translucent_white">#88ffffff</color>
+    <color name="fb">#3b5998</color>
+    <color name="google">#d34836</color>
+
+    <!--Design colors-->
+    <color name="red_dark">#F06423</color>
+    <color name="red_dark2">#D85A1B</color>
+    <color name="cyan_light">#c9ebee</color>
+    <color name="cyan">#b5e3e7</color>
+    <color name="cyan_dark">#70BDC6</color>
+    <color name="navy_blue">#214258</color>
+    <color name="navy_blue_dark">#1C3A4E</color>
+    <color name="light_green">#78DC96</color>
+    <color name="light_blue">#55C8F0</color>
+    <color name="blue_black_dark">#13171d</color>
+    <color name="blue_black_light">#516179</color>
+    <color name="blue_grey_light">#A5B4C8</color>
+    <color name="orange">#FFA500</color>
+    <color name="yellow">#fff44f</color>
+
+    <color name="deep_indigo">#303F9F</color>
+    <!--Pink 500-->
+    <color name="accent_500">#E91E63</color>
+    <!--Pink 700-->
+    <color name="deep_pink">#C2185B</color>
+
+
+    <color name="deep_purple">#673AB7</color>
+    <color name="deep_orange">#FF5722</color>
+
+    <!--Crop ImageView-->
+    <color name="overlay">#AA1C1C1C</color>
+    <color name="guide">#AA86C166</color>
+    <color name="red_500">#F44336</color>
+    <color name="red_200">#EF9A9A</color>
+    <color name="blue_500">#2196F3</color>
+    <color name="blue_200">#90CAF9</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="orange_500">#FF9800</color>
+    <color name="brown_500">#795548</color>
+    <color name="brown_200">#BCAAA4</color>
+    <color name="grey_500">#9E9E9E</color>
+    <color name="grey_200">#EEEEEE</color>
+    <!--Material color-->
+    <color name="pink">#FF4081</color>
+    <color name="purple">#9C27B0</color>
+    <color name="deepblue">#7C4DFF</color>
+    <color name="deepbrown">#5D4037</color>
+    <color name="indigo">#3F51B5</color>
+    <color name="blue">#448AFF</color>
+    <color name="lightblue">#03A9F4</color>
+    <color name="deep_cyan">#00a5a5</color>
+    <color name="deeppurple">#512DA8</color>
+    <color name="bluegrey">#607D8B</color>
+
+    <color name="yellow_dark">#FFA000</color>
+
+
+    <array name="rainbow">
+        <item>@color/indigo</item>
+        <item>@color/pink</item>
+        <item>@color/purple</item>
+        <item>@color/deepbrown</item>
+        <item>@color/deeppurple</item>
+        <item>@color/blue</item>
+        <item>@color/deepblue</item>
+        <item>@color/bluegrey</item>
+        <item>@color/cyan</item>
+        <item>@color/indigo</item>
+        <item>@color/blue_500</item>
+        <item>@color/purple</item>
+        <item>@color/cyan</item>
+        <item>@color/blue</item>
+        <item>@color/deepblue</item>
+        <item>@color/blue_500</item>
+        <item>@color/bluegrey</item>
+        <item>@color/deeppurple</item>
+        <item>@color/accent_500</item>
+        <item>@color/deep_indigo</item>
+        <item>@color/orange_500</item>
+        <item>@color/red_dark</item>
+        <item>@color/blue</item>
+    </array>
+</resources>
