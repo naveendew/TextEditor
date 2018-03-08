@@ -28,7 +28,7 @@ import dagger.Provides;
 @Module
 public class ResourceModule {
 
-    private AppCompatActivity mActivity;
+    private final AppCompatActivity mActivity;
 
     public ResourceModule(AppCompatActivity activity) {
         this.mActivity = activity;

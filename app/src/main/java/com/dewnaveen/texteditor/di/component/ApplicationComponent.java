@@ -21,7 +21,6 @@ import com.dewnaveen.texteditor.data.DataManager;
 import com.dewnaveen.texteditor.di.ApplicationContext;
 import com.dewnaveen.texteditor.di.module.ApplicationModule;
 import com.dewnaveen.texteditor.service.SyncService;
-import com.dewnaveen.texteditor.ui.main.MainActivity;
 
 import javax.inject.Singleton;
 

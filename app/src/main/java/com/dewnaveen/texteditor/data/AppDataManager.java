@@ -3,7 +3,6 @@ package com.dewnaveen.texteditor.data;
 
 
 import android.content.Context;
-import android.net.Uri;
 
 import com.dewnaveen.texteditor.data.db.DbHelper;
 import com.dewnaveen.texteditor.data.db.model.ContentListResponse;
@@ -17,21 +16,11 @@ import com.dewnaveen.texteditor.data.network.ApiHelper;
 import com.dewnaveen.texteditor.data.network.model.PortfolioResponse;
 import com.dewnaveen.texteditor.data.prefs.PreferencesHelper;
 import com.dewnaveen.texteditor.di.ApplicationContext;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.internal.$Gson$Types;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Function;
 import io.realm.RealmResults;
 
 

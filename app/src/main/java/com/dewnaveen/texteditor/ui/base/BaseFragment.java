@@ -16,6 +16,7 @@ package com.dewnaveen.texteditor.ui.base;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
@@ -40,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setUp(view);
     }
@@ -60,7 +61,7 @@ public abstract class BaseFragment extends Fragment {
         mProgressDialog = CommonUtils.showLoadingDialog(this.getContext());
     }
 
-    public void hideLoading() {
+    private void hideLoading() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();
         }
@@ -91,10 +92,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public boolean isNetworkConnected() {
-        if (mActivity != null) {
-            return mActivity.isNetworkConnected();
-        }
-        return false;
+        return mActivity != null && mActivity.isNetworkConnected();
     }
 
     @Override

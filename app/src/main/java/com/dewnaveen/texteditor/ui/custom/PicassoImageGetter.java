@@ -52,7 +52,7 @@ public class PicassoImageGetter implements Html.ImageGetter {
     @SuppressWarnings("deprecation")
     private class BitmapDrawablePlaceHolder extends BitmapDrawable implements Target {
 
-        protected Drawable drawable = activity.getResources().getDrawable( R.drawable.ic_loader );;
+        Drawable drawable = activity.getResources().getDrawable( R.drawable.ic_loader );;
 
         @Override
         public void draw(final Canvas canvas) {

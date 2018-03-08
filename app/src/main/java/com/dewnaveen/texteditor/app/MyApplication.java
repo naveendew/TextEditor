@@ -1,7 +1,7 @@
 
 package com.dewnaveen.texteditor.app;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor.Level;
@@ -19,7 +19,7 @@ import io.realm.RealmConfiguration;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
 
     @Inject
     DataManager mDataManager;

@@ -18,7 +18,7 @@ import javax.inject.Singleton;
 
 
 @Singleton
-public class DbOpenHelper {
+class DbOpenHelper {
 
     @Inject
     public DbOpenHelper() {

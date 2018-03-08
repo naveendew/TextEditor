@@ -3,7 +3,7 @@ package com.dewnaveen.texteditor.ui.CotentList;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
+abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
 
     private int firstVisibleItem, visibleItemCount, totalItemCount;
     private volatile boolean mEnabled = true;

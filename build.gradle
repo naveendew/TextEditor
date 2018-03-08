@@ -43,11 +43,15 @@ ext {
     calligraphyVersion = '2.2.0'
     glideVersion = '3.7.0'
 
+    rxjavaAnnotation = '1.0'
+    rxjavaInject = '1'
+
     rx2FastAndroidNetworking = '1.0.0'
     facebookVersion = '[4,5)'
     lottieVersion = '2.2.5'
     matDialogVersion = '0.9.6.0'
     toastyVersion = '0.1.1'
+    multiDexVersion = '1.0.3'
 
     dagger2Version = '2.8'
     rxjava2Version = '2.0.6'

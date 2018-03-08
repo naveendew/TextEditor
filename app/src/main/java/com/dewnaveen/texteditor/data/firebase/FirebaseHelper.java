@@ -14,8 +14,6 @@
 package com.dewnaveen.texteditor.data.firebase;
 
 
-import android.net.Uri;
-
 public interface FirebaseHelper {
 
 

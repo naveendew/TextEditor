@@ -15,32 +15,24 @@ package com.dewnaveen.texteditor.ui.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.graphics.Canvas;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -48,39 +40,34 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.androidnetworking.error.ANError;
-import com.dewnaveen.texteditor.BuildConfig;
 import com.dewnaveen.texteditor.R;
-import com.dewnaveen.texteditor.data.DataManager;
 import com.dewnaveen.texteditor.data.db.model.Data;
 import com.dewnaveen.texteditor.data.db.model.PostContentRequest;
-import com.dewnaveen.texteditor.data.db.model.PostContentResponse;
+import com.dewnaveen.texteditor.data.network.ApiEndPoint;
 import com.dewnaveen.texteditor.ui.base.BaseActivity;
 import com.dewnaveen.texteditor.ui.custom.PicassoImageGetter;
-import com.dewnaveen.texteditor.ui.custom.RoundedImageView;
 import com.dewnaveen.texteditor.ui.custom.TextEditor;
 import com.dewnaveen.texteditor.ui.preview.PreviewActivity;
 import com.dewnaveen.texteditor.utils.AppLogger;
 import com.dewnaveen.texteditor.utils.CommonUtils;
 import com.dewnaveen.texteditor.utils.DialogFactory;
+import com.dewnaveen.texteditor.utils.FileStorageUtils;
 import com.dewnaveen.texteditor.utils.NetworkUtils;
 import com.dewnaveen.texteditor.utils.ScreenUtils;
 import com.dewnaveen.texteditor.utils.SettingsScreen;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.yalantis.ucrop.UCrop;
 
 import org.jsoup.Jsoup;
@@ -88,32 +75,27 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.channels.FileChannel;
-import java.security.Permission;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import butterknife.BindColor;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.functions.Consumer;
-import io.realm.Realm;
 
 
 public class MainActivity extends BaseActivity {
-    private static final int REQUEST_PERMISSION_STORAGE = 3;
+    public static final int REQUEST_PERMISSION_STORAGE = 3;
 
 /*
     @Inject
@@ -166,12 +148,14 @@ public class MainActivity extends BaseActivity {
     private String imageFileName = "";
 
     @Inject
-    public AppCompatActivity activity;
+    AppCompatActivity activity;
 
-    int content_id = 0;
+    private int content_id = 0;
 
-    final Handler handler = new Handler();
-    private boolean upload_success = false;
+    private final Handler handler = new Handler();
+    private final boolean upload_success = false;
+    private Drawable drawable;
+    Boolean success_file_local;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -377,7 +361,7 @@ public class MainActivity extends BaseActivity {
         postContentRequest.setContent(editText_source);
         postContentRequest.setHeader(editText_source_hdr);
         postContentRequest.setContent_id(content_id);
-        postContentRequest.setFile("");
+        postContentRequest.setFile();
         postContentRequest.setFile_count(imgList.size());
         postContentRequest.setImgList(imgList);
 
@@ -516,7 +500,7 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    public void initializeEditor() {
+    private void initializeEditor() {
 
         showLoading();
 
@@ -527,14 +511,11 @@ public class MainActivity extends BaseActivity {
             return false;
         });
 
-        editTextHdr.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    editLayout.setVisibility(View.GONE);
-                } else {
-                    editLayout.setVisibility(View.VISIBLE);
-                }
+        editTextHdr.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                editLayout.setVisibility(View.GONE);
+            } else {
+                editLayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -547,6 +528,7 @@ public class MainActivity extends BaseActivity {
 
             content_id = bundle.getInt("content_id", 0);
 
+            //Show local Data on Loading - Because Images from Server takes time and Delay UI
             getContentFromRealm();
 
 /*
@@ -586,38 +568,130 @@ public class MainActivity extends BaseActivity {
         handler.postDelayed(() -> {
             String base = "storage/emulated/0/TextEditor/";
 
+            Log.d("BitmapParseContent-", content);
 
-            editText.setText(Html.fromHtml(content, (String source) -> {
+
+            editText.setText(Html.fromHtml(content, new Html.ImageGetter() {
+                @Override
+                public Drawable getDrawable(String source) {
 //                Log.d("image_source - ", source);
-                Drawable drawable;
-                Bitmap bitmap = BitmapFactory.decodeFile(base + source);
+                    //drawable;
+                    String path = base + source;
+                    Bitmap bitmap = BitmapFactory.decodeFile(path);
 
-                AppLogger.d("BitmapParse-", base + source);
+                    Log.d("BitmapParse-", path);
 
-                if (bitmap == null) {
-                    resource_missing[0] = true;
-                    AppLogger.d("BitmapParseException");
+                    if (bitmap == null) {
 
-                }
+                        //Local Image File Not Found
+                        if (NetworkUtils.isNetworkConnected(activity)) {
+
+                            //Local Image File Not Found - Internet Connected
+                            AppLogger.d("BitmapParseException");
+
+                            path = ApiEndPoint.ENDPOINT_CONTENT_IMAGE_PATH + source;
+
+                            Log.d("BitmapParsePicasso-", path);
+
+                            BitmapDrawablePlaceHolder drawable = new BitmapDrawablePlaceHolder(editText);
+                            Picasso.with(activity)
+                                    .load(path)
+                                    .error(R.drawable.ic_loader)
+                                    .placeholder(R.drawable.ic_loader)
+                                    .into(drawable);
+
+                            //Local Image File Not Found - Save Image to Local Storage
+                            storeImagetoLocal(path, source);
+                            return drawable;
+                        } else {
+                            //Local Image File Not Found - Internet Not Connected - Show Warning Message
+                            resource_missing[0] = true;
+                        }
+
+
+                    } else {
+                        //Local Image File Found
+                        drawable = new BitmapDrawable(activity.getResources(), bitmap);
+
+                        drawable.setBounds(
+                                0,
+                                0,
+                                drawable.getIntrinsicWidth(),
+                                drawable.getIntrinsicHeight());
+
+                    }
 //                drawable = new BitmapDrawable(bitmap);
-                drawable = new BitmapDrawable(getResources(), bitmap);
 
-                drawable.setBounds(
-                        0,
-                        0,
-                        drawable.getIntrinsicWidth(),
-                        drawable.getIntrinsicHeight());
-
-                return drawable;
+                    return drawable;
+                }
             }, null));
 
             editText.setMovementMethod(LinkMovementMethod.getInstance());
             hideLoading();
+
+            if (resource_missing[0])
+                TastyToast.makeText(getApplicationContext(), getString(R.string.res_missing), TastyToast.LENGTH_LONG, TastyToast.WARNING);
+
         }, 2500);
 
-        if (resource_missing[0])
-            TastyToast.makeText(getApplicationContext(), getString(R.string.res_missing), TastyToast.LENGTH_LONG, TastyToast.WARNING);
 
+    }
+
+    private boolean storeImagetoLocal(String path, String filename) {
+        //Local Image File Not Found - Save Image to Local Storage
+        success_file_local = false;
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                Log.d("storeImagetoLocal", filename);
+                Bitmap imageData = bitmap;
+
+                String iconsStoragePath = Environment.getExternalStorageDirectory() + "/TextEditor/";
+                File sdIconStorageDir = new File(iconsStoragePath);
+
+                sdIconStorageDir.mkdirs();
+
+                try {
+                    String filePath = sdIconStorageDir.toString() + "/" + filename;
+                    Log.d("storeImagefilePath", filePath);
+
+                    FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+
+                    BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
+
+                    //choose another format if PNG doesn't suit you
+                    imageData.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+
+                    bos.flush();
+                    bos.close();
+                    success_file_local = true;
+
+                } catch (FileNotFoundException e) {
+                    Log.w("TAG", "Error saving image file: " + e.getMessage());
+                    success_file_local = false;
+                } catch (IOException e) {
+                    Log.w("TAG", "Error saving image file: " + e.getMessage());
+                    success_file_local = false;
+                }
+
+
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                success_file_local = false;
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                success_file_local = false;
+            }
+        };
+
+        Picasso.with(this).load(path).into(target);
+
+
+        return success_file_local;
     }
 
     private void getContentFromServer() {
@@ -669,8 +743,8 @@ public class MainActivity extends BaseActivity {
 
         String getAccountsPermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
         if (!hasPermission(getAccountsPermission)) {
-            requestPermissionsSafely(new String[]{getAccountsPermission},
-                    REQUEST_PERMISSION_STORAGE);
+            requestPermissionsSafely(new String[]{getAccountsPermission}
+            );
         } else {
             initializeEditor();
         }
@@ -717,6 +791,7 @@ public class MainActivity extends BaseActivity {
                     UCrop.Options options = new UCrop.Options();
                     options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
                     options.setCompressionQuality(50);
+                    options.setFreeStyleCropEnabled(true);
                     options.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 
                     boolean success = true;
@@ -793,6 +868,51 @@ public class MainActivity extends BaseActivity {
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+    class BitmapDrawablePlaceHolder extends BitmapDrawable implements Target {
+
+        Drawable drawable = activity.getResources().getDrawable(R.drawable.ic_loader);
+        ;
+
+        TextView textView;
+
+        BitmapDrawablePlaceHolder(TextView target) {
+            textView = target;
+        }
+
+        @Override
+        public void draw(final Canvas canvas) {
+            if (drawable != null) {
+                drawable.draw(canvas);
+            }
+        }
+
+        public void setDrawable(Drawable drawable) {
+            this.drawable = drawable;
+            int width = drawable.getIntrinsicWidth();
+            int height = drawable.getIntrinsicHeight();
+            drawable.setBounds(0, 0, width, height);
+            setBounds(0, 0, width, height);
+            if (textView != null) {
+                textView.setText(textView.getText());
+            }
+        }
+
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            setDrawable(new BitmapDrawable(activity.getResources(), bitmap));
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+        }
+
     }
 
 }

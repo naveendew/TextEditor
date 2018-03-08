@@ -125,7 +125,7 @@ public class ContentResponse implements Parcelable
         }
                 ;
 
-        protected Data(Parcel in) {
+        Data(Parcel in) {
             this.id = ((Long) in.readValue((Long.class.getClassLoader())));
             this.contentId = ((Long) in.readValue((Long.class.getClassLoader())));
             this.content = ((String) in.readValue((String.class.getClassLoader())));

@@ -2,8 +2,6 @@ package com.dewnaveen.texteditor.data.db.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -16,15 +14,15 @@ public class ContentListResponse extends RealmObject{
 
     @PrimaryKey
     @SerializedName("id")
-    public int id;
+    private int id;
     @SerializedName("error")
-    public boolean error;
+    private boolean error;
     @SerializedName("data")
-    public RealmList<Data> data;
+    private RealmList<Data> data;
     @SerializedName("count")
-    public int count;
+    private int count;
     @SerializedName("message")
-    public String message;
+    private String message;
 
     public int getId() {
         return id;

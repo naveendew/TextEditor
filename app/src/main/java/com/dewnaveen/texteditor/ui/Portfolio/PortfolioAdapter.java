@@ -11,23 +11,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dewnaveen.texteditor.R;
-import com.dewnaveen.texteditor.data.db.model.Data;
-import com.dewnaveen.texteditor.data.db.model.PostContentResponse;
 import com.dewnaveen.texteditor.data.network.model.PortfolioResponse;
-import com.dewnaveen.texteditor.utils.ScreenUtils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class PortfolioAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
     private ArrayList<PortfolioResponse.Apps> modelList;
 
     private OnItemClickListener mItemClickListener;
@@ -143,14 +138,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ButterKnife.bind(this, itemView);
 
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mItemClickListener.onItemClick(itemView, getAdapterPosition(), modelList.get(getAdapterPosition()));
-
-
-                }
-            });
+            itemView.setOnClickListener(view -> mItemClickListener.onItemClick(itemView, getAdapterPosition(), modelList.get(getAdapterPosition())));
 
         }
     }

@@ -20,6 +20,8 @@ android {
         }
         release {
             minifyEnabled true
+            multiDexEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASE_URL", "\"http://www.dewnaveen.info/api\"")
             buildConfigField("String", "API_KEY", "\"XXXXXXXXXX\"")
@@ -34,8 +36,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+//    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
@@ -58,9 +60,9 @@ dependencies {
 
 // dependency injection
     compile "com.google.dagger:dagger:$rootProject.dagger2Version"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.8"
-    provided 'javax.annotation:jsr250-api:1.0'
-    compile 'javax.inject:javax.inject:1'
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    provided "javax.annotation:jsr250-api:$rootProject.rxjavaAnnotation"
+    compile "javax.inject:javax.inject:$rootProject.rxjavaInject"
 
 // reactive
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
@@ -74,7 +76,7 @@ dependencies {
     compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
 // facebook
-    compile "com.facebook.android:facebook-android-sdk:$rootProject.facebookVersion"
+//    compile "com.facebook.android:facebook-android-sdk:$rootProject.facebookVersion"
 
 // firebase
     compile "com.google.firebase:firebase-auth:$rootProject.firebaseauthVersion"
@@ -84,7 +86,7 @@ dependencies {
     compile "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
 
     // rx2firebase
-    compile "com.github.frangsierra:rx2firebase:$rootProject.rx2firebaseVersion"
+//    compile "com.github.frangsierra:rx2firebase:$rootProject.rx2firebaseVersion"
 
     // picasso
     compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
@@ -102,6 +104,9 @@ dependencies {
 
     //Toasty
     compile "com.sdsmdg.tastytoast:tastytoast:$rootProject.toastyVersion"
+
+    //multidex
+    compile "com.android.support:multidex:$rootProject.multiDexVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {

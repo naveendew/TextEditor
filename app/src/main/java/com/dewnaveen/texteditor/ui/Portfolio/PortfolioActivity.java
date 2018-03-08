@@ -2,13 +2,10 @@ package com.dewnaveen.texteditor.ui.Portfolio;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.support.v7.widget.LinearLayoutManager;
 
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -20,9 +17,6 @@ import com.dewnaveen.texteditor.R;
 import com.dewnaveen.texteditor.data.network.model.PortfolioResponse;
 import com.dewnaveen.texteditor.ui.base.BaseActivity;
 import com.dewnaveen.texteditor.utils.AppLogger;
-
-import android.widget.Toast;
-import android.os.Handler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,12 +69,7 @@ public class PortfolioActivity extends BaseActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
 
     }
 
@@ -91,28 +80,20 @@ public class PortfolioActivity extends BaseActivity {
                 .getPortfolioAPI()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<PortfolioResponse>() {
-                    @Override
-                    public void accept(@NonNull PortfolioResponse appsResponse)
-                            throws Exception {
-                        if (appsResponse != null && appsResponse.getData() != null) {
+                .subscribe(appsResponse -> {
+                    if (appsResponse != null && appsResponse.getData() != null) {
 
-                            modelList = (ArrayList<PortfolioResponse.Apps>) appsResponse.getData();
-                            mAdapter.addItems(modelList);
-                        }
-                        hideLoading();
+                        modelList = (ArrayList<PortfolioResponse.Apps>) appsResponse.getData();
+                        mAdapter.addItems(modelList);
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable)
-                            throws Exception {
-                        hideLoading();
+                    hideLoading();
+                }, throwable -> {
+                    hideLoading();
 
-                        // handle the error here
-                        if (throwable instanceof ANError) {
-                            ANError anError = (ANError) throwable;
-                            handleApiError(anError);
-                        }
+                    // handle the error here
+                    if (throwable instanceof ANError) {
+                        ANError anError = (ANError) throwable;
+                        handleApiError(anError);
                     }
                 }));
 
@@ -135,20 +116,17 @@ public class PortfolioActivity extends BaseActivity {
         recyclerView.setAdapter(mAdapter);
 
 
-        mAdapter.SetOnItemClickListener(new PortfolioAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, PortfolioResponse.Apps model) {
+        mAdapter.SetOnItemClickListener((view, position, model) -> {
 
-                if (!model.getAppUrl().equals("")) {
-                    try {
-                        Intent intent = new Intent();
-                        intent.setAction(Intent.ACTION_VIEW);
-                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                        intent.setData(Uri.parse(model.getAppUrl()));
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        AppLogger.d("url error");
-                    }
+            if (!model.getAppUrl().equals("")) {
+                try {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    intent.setData(Uri.parse(model.getAppUrl()));
+                    startActivity(intent);
+                } catch (Exception e) {
+                    AppLogger.d("url error");
                 }
             }
         });

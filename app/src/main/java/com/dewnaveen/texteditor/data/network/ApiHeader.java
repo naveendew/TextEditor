@@ -23,8 +23,8 @@ import javax.inject.Singleton;
 @Singleton
 public class ApiHeader {
 
-    private ProtectedApiHeader mProtectedApiHeader;
-    private PublicApiHeader mPublicApiHeader;
+    private final ProtectedApiHeader mProtectedApiHeader;
+    private final PublicApiHeader mPublicApiHeader;
 
     @Inject
     public ApiHeader(PublicApiHeader publicApiHeader, ProtectedApiHeader protectedApiHeader) {
@@ -74,10 +74,10 @@ public class ApiHeader {
         @SerializedName("access_token")
         private String mAccessToken;
 
-        public ProtectedApiHeader(String mApiKey, String mUserId, String mAccessToken) {
+        public ProtectedApiHeader(String mApiKey, String mUserId) {
             this.mApiKey = mApiKey;
             this.mUserId = mUserId;
-            this.mAccessToken = mAccessToken;
+            this.mAccessToken = "";
         }
 
         public String getApiKey() {

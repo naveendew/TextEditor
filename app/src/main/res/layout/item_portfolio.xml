@@ -29,7 +29,8 @@
                 android:layout_height="250dp"
                 android:scaleType="fitCenter"
                 android:background="@color/navy_blue"
-                tools:src="@drawable/ic_rabbit" />
+                tools:src="@drawable/ic_rabbit"
+                android:contentDescription="" />
 
             <TextView
                 android:id="@+id/title_text_view"

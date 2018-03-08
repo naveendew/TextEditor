@@ -2,24 +2,15 @@ package com.dewnaveen.texteditor.ui.CotentList;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import android.support.v7.widget.LinearLayoutManager;
-
 import com.dewnaveen.texteditor.R;
-import com.dewnaveen.texteditor.data.db.model.ContentListResponse;
-import com.dewnaveen.texteditor.data.db.model.ContentListResponse;
 import com.dewnaveen.texteditor.data.db.model.Data;
 import com.dewnaveen.texteditor.utils.CommonUtils;
 
@@ -35,7 +26,7 @@ import butterknife.ButterKnife;
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
     private List<Data> modelList;
 
     private OnItemClickListener mItemClickListener;
@@ -133,14 +124,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
              ButterKnife.bind(this, itemView);
 
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mItemClickListener.onItemClick(itemView, getAdapterPosition(), modelList.get(getAdapterPosition()));
-
-
-                }
-            });
+            itemView.setOnClickListener(view -> mItemClickListener.onItemClick(itemView, getAdapterPosition(), modelList.get(getAdapterPosition())));
 
         }
     }

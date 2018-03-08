@@ -18,8 +18,6 @@ import com.dewnaveen.texteditor.data.firebase.FirebaseHelper;
 import com.dewnaveen.texteditor.data.network.ApiHelper;
 import com.dewnaveen.texteditor.data.prefs.PreferencesHelper;
 
-import io.reactivex.Observable;
-
 public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper,FirebaseHelper {
 
     void updateUserInfo(

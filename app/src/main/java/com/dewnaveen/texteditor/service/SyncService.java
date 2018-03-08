@@ -3,7 +3,6 @@ package com.dewnaveen.texteditor.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -14,15 +13,12 @@ import android.util.Log;
 import com.androidnetworking.error.ANError;
 import com.dewnaveen.texteditor.app.MyApplication;
 import com.dewnaveen.texteditor.data.DataManager;
-import com.dewnaveen.texteditor.data.db.model.ContentListResponse;
 import com.dewnaveen.texteditor.data.db.model.Data;
 import com.dewnaveen.texteditor.data.db.model.PostContentRequest;
-import com.dewnaveen.texteditor.data.db.model.PostContentResponse;
 import com.dewnaveen.texteditor.di.component.DaggerServiceComponent;
 import com.dewnaveen.texteditor.di.component.ServiceComponent;
 import com.dewnaveen.texteditor.rxjava.AppSchedulerProvider;
 import com.dewnaveen.texteditor.rxjava.SchedulerProvider;
-import com.dewnaveen.texteditor.ui.preview.PreviewActivity;
 import com.dewnaveen.texteditor.utils.AppLogger;
 
 import org.jsoup.Jsoup;
@@ -31,12 +27,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import io.realm.RealmResults;
 
 public class SyncService extends Service {
@@ -47,9 +41,9 @@ public class SyncService extends Service {
     DataManager mDataManager;
 
 
-    CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
-    public SchedulerProvider mSchedulerProvider = new AppSchedulerProvider();
+    private final SchedulerProvider mSchedulerProvider = new AppSchedulerProvider();
 
 
     public static Intent getStartIntent(Context context) {
@@ -93,7 +87,7 @@ public class SyncService extends Service {
             postContentRequest.setContent(editText_source);
             postContentRequest.setHeader(editText_source_hdr);
             postContentRequest.setContent_id(5);
-            postContentRequest.setFile("");
+            postContentRequest.setFile();
             postContentRequest.setFile_count(imgList.size());
             postContentRequest.setImgList(imgList);
 
@@ -102,29 +96,23 @@ public class SyncService extends Service {
                     .postContenttoServer(postContentRequest)
                     .subscribeOn(mSchedulerProvider.io())
                     .observeOn(mSchedulerProvider.ui())
-                    .subscribe(new Consumer<PostContentResponse>() {
-                        @Override
-                        public void accept(PostContentResponse response) throws Exception {
+                    .subscribe(response -> {
 
-                            Log.d("PostContentResponse- ", response.getMessage());
+                        Log.d("PostContentResponse- ", response.getMessage());
 
-                            if (response.isError()) {
-                            } else {
+                        if (response.isError()) {
+                        } else {
 
-                                upDateRealmSyncData(data);
-
-                            }
+                            upDateRealmSyncData(data);
 
                         }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
 
-                            // handle the login error here
-                            if (throwable instanceof ANError) {
-                                ANError anError = (ANError) throwable;
-                                AppLogger.d(anError.toString());
-                            }
+                    }, throwable -> {
+
+                        // handle the login error here
+                        if (throwable instanceof ANError) {
+                            ANError anError = (ANError) throwable;
+                            AppLogger.d(anError.toString());
                         }
                     }));
 

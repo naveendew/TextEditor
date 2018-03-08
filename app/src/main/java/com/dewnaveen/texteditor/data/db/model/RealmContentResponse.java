@@ -10,8 +10,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import io.realm.RealmObject;
-
 public class RealmContentResponse implements Parcelable
 {
 
@@ -41,7 +39,7 @@ public class RealmContentResponse implements Parcelable
     }
             ;
 
-    protected RealmContentResponse(Parcel in) {
+    private RealmContentResponse(Parcel in) {
         this.error = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
         this.data = ((Data) in.readValue((Data.class.getClassLoader())));
         this.message = ((String) in.readValue((String.class.getClassLoader())));
@@ -127,7 +125,7 @@ public class RealmContentResponse implements Parcelable
         }
                 ;
 
-        protected Data(Parcel in) {
+        Data(Parcel in) {
             this.id = ((Long) in.readValue((Long.class.getClassLoader())));
             this.contentId = ((Long) in.readValue((Long.class.getClassLoader())));
             this.content = ((String) in.readValue((String.class.getClassLoader())));

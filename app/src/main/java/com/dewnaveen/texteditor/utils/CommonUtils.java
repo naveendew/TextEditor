@@ -92,7 +92,7 @@ public final class CommonUtils {
 
     public static boolean wifiState(Context context)
     {
-        WifiManager mng = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager mng = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         return mng.isWifiEnabled();
     }
 

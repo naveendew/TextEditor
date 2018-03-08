@@ -25,8 +25,6 @@ import com.dewnaveen.texteditor.data.network.model.PortfolioResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -43,10 +41,10 @@ import okhttp3.OkHttpClient;
 @Singleton
 public class AppApiHelper implements ApiHelper {
 
-    private ApiHeader mApiHeader;
+    private final ApiHeader mApiHeader;
 
     @Inject
-    public Realm realm;
+    Realm realm;
 
     @Inject
     public AppApiHelper(ApiHeader apiHeader) {

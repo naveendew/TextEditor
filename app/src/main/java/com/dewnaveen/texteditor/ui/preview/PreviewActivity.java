@@ -3,7 +3,7 @@ package com.dewnaveen.texteditor.ui.preview;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.Spannable;
 import android.util.Log;
@@ -11,10 +11,7 @@ import android.widget.TextView;
 
 import com.androidnetworking.error.ANError;
 import com.dewnaveen.texteditor.R;
-import com.dewnaveen.texteditor.data.db.model.ContentListResponse;
 import com.dewnaveen.texteditor.data.db.model.ContentResponse;
-import com.dewnaveen.texteditor.data.db.model.Data;
-import com.dewnaveen.texteditor.data.db.model.GetContentByIdServer;
 import com.dewnaveen.texteditor.data.network.ApiEndPoint;
 import com.dewnaveen.texteditor.ui.CotentList.ContentListActivity;
 import com.dewnaveen.texteditor.ui.base.BaseActivity;
@@ -26,8 +23,6 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -42,9 +37,9 @@ public class PreviewActivity extends BaseActivity {
     @BindView(R.id.htmlHdrTextView)
     TextView htmlHdrTextView;
 
-    Activity mAct = this;
-    OkHttpClient client;
-    String TAG = "PreviewActivity";
+    private final Activity mAct = this;
+    private OkHttpClient client;
+    private final String TAG = "PreviewActivity";
     private int content_id;
 
     @Override
@@ -131,12 +126,12 @@ public class PreviewActivity extends BaseActivity {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
             }
 
             @Override
-            public void onResponse(Call call, final Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull final Response response) throws IOException {
                 if (!response.isSuccessful()) {
                     throw new IOException("Unexpected code " + response);
                 } else {
@@ -144,26 +139,23 @@ public class PreviewActivity extends BaseActivity {
                     Log.d(TAG, responseData);
 
                     // Run view-related code back on the main thread
-                    PreviewActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Gson gson = new Gson();
-                            ContentResponse response = gson.fromJson(responseData, ContentResponse.class);
-                            Log.d("ContentResponse", response.getMessage());
+                    PreviewActivity.this.runOnUiThread(() -> {
+                        Gson gson = new Gson();
+                        ContentResponse response1 = gson.fromJson(responseData, ContentResponse.class);
+                        Log.d("ContentResponse", response1.getMessage());
 
-                            String content = response.getData().getContent();
+                        String content = response1.getData().getContent();
 //                            htmlTextView.setText(Html.fromHtml(response.getData().getContent()));
 
-                            PicassoImageGetter imageGetter = new PicassoImageGetter(htmlTextView, mAct);
-                            Spannable html;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                                html = (Spannable) Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY, imageGetter, null);
-                            } else {
-                                html = (Spannable) Html.fromHtml(content, imageGetter, null);
-                            }
-                            htmlTextView.setText(html);
-
+                        PicassoImageGetter imageGetter = new PicassoImageGetter(htmlTextView, mAct);
+                        Spannable html;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                            html = (Spannable) Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY, imageGetter, null);
+                        } else {
+                            html = (Spannable) Html.fromHtml(content, imageGetter, null);
                         }
+                        htmlTextView.setText(html);
+
                     });
                 }
             }

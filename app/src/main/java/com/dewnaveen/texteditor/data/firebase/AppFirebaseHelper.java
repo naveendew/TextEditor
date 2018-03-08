@@ -14,7 +14,6 @@
 package com.dewnaveen.texteditor.data.firebase;
 
 import android.content.Context;
-import android.net.Uri;
 
 import com.dewnaveen.texteditor.di.ApplicationContext;
 import com.google.firebase.auth.FirebaseAuth;

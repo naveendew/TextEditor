@@ -86,10 +86,7 @@ public abstract class BaseDialog extends DialogFragment{
     }
 
     public boolean isNetworkConnected() {
-        if (mActivity != null) {
-            return mActivity.isNetworkConnected();
-        }
-        return false;
+        return mActivity != null && mActivity.isNetworkConnected();
     }
 
     @Override
@@ -110,7 +107,7 @@ public abstract class BaseDialog extends DialogFragment{
         }
     }
 
-    public BaseActivity getBaseActivity() {
+    private BaseActivity getBaseActivity() {
         return mActivity;
     }
 
@@ -152,7 +149,7 @@ public abstract class BaseDialog extends DialogFragment{
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setUp(view);
     }

@@ -97,7 +97,7 @@ public class PostContentRequest {
         return file;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    public void setFile() {
+        this.file = "";
     }
 }

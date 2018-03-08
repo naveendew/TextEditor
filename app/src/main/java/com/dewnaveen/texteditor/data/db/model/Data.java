@@ -12,19 +12,19 @@ import io.realm.annotations.PrimaryKey;
 public class Data extends RealmObject {
     @PrimaryKey
     @SerializedName("id")
-    public int id;
+    private int id;
     @SerializedName("content_id")
-    public int content_id;
+    private int content_id;
     @SerializedName("content")
-    public String content;
+    private String content;
     @SerializedName("header")
-    public String header;
+    private String header;
     @SerializedName("file")
-    public String file;
+    private String file;
     @SerializedName("created_at")
-    public String created_at;
+    private String created_at;
     @SerializedName("updated_at")
-    public String updated_at;
+    private String updated_at;
 
     private Boolean sync_flag;
 

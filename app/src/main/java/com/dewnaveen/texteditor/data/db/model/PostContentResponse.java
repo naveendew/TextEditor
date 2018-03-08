@@ -9,13 +9,13 @@ import com.google.gson.annotations.SerializedName;
 public class PostContentResponse {
 
     @SerializedName("error")
-    public boolean error;
+    private boolean error;
     @SerializedName("data")
-    public Data data;
+    private Data data;
     @SerializedName("file_count")
-    public String file_count;
+    private String file_count;
     @SerializedName("message")
-    public String message;
+    private String message;
 
     public class Data {
         @SerializedName("file")

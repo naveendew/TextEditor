@@ -25,18 +25,16 @@ import com.dewnaveen.texteditor.ui.CotentList.ContentListActivity;
 import com.dewnaveen.texteditor.ui.base.BaseActivity;
 import com.dewnaveen.texteditor.ui.main.MainActivity;
 import com.dewnaveen.texteditor.ui.splash.SplashActivity;
-import com.google.firebase.auth.FirebaseAuth;
 
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.disposables.CompositeDisposable;
-import io.realm.Realm;
 
 
 @Module
 public class ActivityModule {
 
-    private AppCompatActivity mActivity;
+    private final AppCompatActivity mActivity;
 
 //    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 

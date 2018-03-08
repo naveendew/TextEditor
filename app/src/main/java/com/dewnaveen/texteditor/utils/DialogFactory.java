@@ -14,7 +14,7 @@ import com.dewnaveen.texteditor.R;
 
 public class DialogFactory {
 
-    public static Dialog createSimpleOkErrorDialog(Context context, String title, String message) {
+    private static Dialog createSimpleOkErrorDialog(Context context, String title, String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
@@ -31,7 +31,7 @@ public class DialogFactory {
                 context.getString(messageResource));
     }
 
-    public static Dialog createSimpleOkErrorDialog(Context context, String message) {
+    private static Dialog createSimpleOkErrorDialog(Context context, String message) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.dialog_error_title))
                 .setMessage(message)

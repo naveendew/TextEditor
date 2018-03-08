@@ -9,11 +9,9 @@ import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.method.LinkMovementMethod;
 import android.text.style.CharacterStyle;
 import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
-import android.text.style.UnderlineSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -29,14 +27,14 @@ public class TextEditor extends android.support.v7.widget.AppCompatEditText {
     public static final int TYPEFACE_BOLD_ITALICS = 3;
     public static final int TYPEFACE_UNDERLINE = 4;
     public static final int TYPEFACE_IMAGE = 5;
-    public static boolean underline = false;
+    private static boolean underline = false;
 
     private int currentTypeface;
     private int lastCursorPosition, endCursorPosition = 0;
     private int selectionStartCursorPosition, selectionEndCursorPosition = 0;
     private int tId;
 
-    Drawable drawable;
+    private Drawable drawable;
     private String imageFileName;
 
 
@@ -231,25 +229,20 @@ public class TextEditor extends android.support.v7.widget.AppCompatEditText {
         substr2 = substr2.replace("src=\"null\"", "src=\"" + imageFileName + "\"");
 
         String ss = substr + substr2;
-        this.setText(Html.fromHtml(ss, new Html.ImageGetter() {
+        this.setText(Html.fromHtml(ss, source -> {
+            Log.d("image_source - ", source);
+            String base = "storage/emulated/0/TextEditor/";
+            Drawable drawable1;
+            Bitmap bitmap = BitmapFactory.decodeFile(base + source);
+            drawable1 = new BitmapDrawable(getResources(), bitmap);
 
-            @Override
-            public Drawable getDrawable(String source) {
-                Log.d("image_source - ", source);
-                String base = "storage/emulated/0/TextEditor/";
-                Drawable drawable;
-                Bitmap bitmap = BitmapFactory.decodeFile(base + source);
-                drawable = new BitmapDrawable(getResources(), bitmap);
+            drawable1.setBounds(
+                    0,
+                    0,
+                    drawable1.getIntrinsicWidth(),
+                    drawable1.getIntrinsicHeight());
 
-                drawable.setBounds(
-                        0,
-                        0,
-                        drawable.getIntrinsicWidth(),
-                        drawable.getIntrinsicHeight());
-
-                return drawable;
-            }
-
+            return drawable1;
         }, null));
 
 //        this.setMovementMethod(LinkMovementMethod.getInstance());

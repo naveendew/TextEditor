@@ -14,12 +14,10 @@
 package com.dewnaveen.texteditor.data.network;
 
 
-import com.dewnaveen.texteditor.BuildConfig;
-
 public final class ApiEndPoint {
 
     static String BASE_LOCAL = "http://192.168.43.6/naveen_resume/public/";
-    static String BASE_SERVER = "http://dewnaveen.info/";
+    private static final String BASE_SERVER = "http://dewnaveen.info/";
 
     public static final String ENDPOINT_CONTENT_LIST = BASE_SERVER + "api/get/contentList";
 

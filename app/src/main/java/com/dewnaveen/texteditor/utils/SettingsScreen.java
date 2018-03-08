@@ -7,15 +7,13 @@ import android.os.Build;
 import android.provider.Settings;
 import android.widget.Toast;
 
-import java.lang.ref.Reference;
-
 /**
  * Created by naveendewangan on 07/03/18.
  */
 
 public class SettingsScreen {
 
-    Context context;
+    private final Context context;
 
     public SettingsScreen(Context context) {
         this.context = context;
@@ -27,11 +25,11 @@ public class SettingsScreen {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         } catch (Exception e) {
-            showtoast(e.toString(), true);
+            showtoast(e.toString());
         }
     }
 
-    private void showtoast(String s, boolean b) {
+    private void showtoast(String s) {
         Toast.makeText(context,s,Toast.LENGTH_SHORT).show();
     }
 

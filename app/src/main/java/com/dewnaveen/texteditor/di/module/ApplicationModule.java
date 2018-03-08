@@ -120,8 +120,8 @@ public class ApplicationModule {
 //        return null;
         return new ApiHeader.ProtectedApiHeader(
                 apiKey,
-                preferencesHelper.getCurrentUserId(),
-                "");
+                preferencesHelper.getCurrentUserId()
+        );
 /*
         return new ApiHeader.ProtectedApiHeader(
                 apiKey,

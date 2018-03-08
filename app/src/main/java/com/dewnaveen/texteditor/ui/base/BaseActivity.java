@@ -43,7 +43,6 @@ import com.dewnaveen.texteditor.rxjava.SchedulerProvider;
 import com.dewnaveen.texteditor.utils.AppConstants;
 import com.dewnaveen.texteditor.utils.CommonUtils;
 import com.dewnaveen.texteditor.utils.NetworkUtils;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -51,7 +50,6 @@ import javax.inject.Inject;
 
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
-import io.realm.Realm;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
@@ -66,10 +64,10 @@ public abstract class BaseActivity extends AppCompatActivity
 
 
     @Inject
-    public DataManager mDataManager;
+    DataManager mDataManager;
 
     @Inject
-    public SchedulerProvider mSchedulerProvider;
+    SchedulerProvider mSchedulerProvider;
 
     @Inject
     CompositeDisposable mCompositeDisposable;
@@ -108,14 +106,14 @@ public abstract class BaseActivity extends AppCompatActivity
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    public void requestPermissionsSafely(String[] permissions, int requestCode) {
+    protected void requestPermissionsSafely(String[] permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, requestCode);
+            requestPermissions(permissions, com.dewnaveen.texteditor.ui.main.MainActivity.REQUEST_PERMISSION_STORAGE);
         }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    public boolean hasPermission(String permission) {
+    protected boolean hasPermission(String permission) {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
                 checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
@@ -135,7 +133,7 @@ public abstract class BaseActivity extends AppCompatActivity
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
                 message, Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView
+        TextView textView = sbView
                 .findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(ContextCompat.getColor(this, R.color.white));
         snackbar.show();
@@ -188,15 +186,15 @@ public abstract class BaseActivity extends AppCompatActivity
         }
     }
 
-    public DataManager getDataManager() {
+    protected DataManager getDataManager() {
         return mDataManager;
     }
 
-    public SchedulerProvider getSchedulerProvider() {
+    protected SchedulerProvider getSchedulerProvider() {
         return mSchedulerProvider;
     }
 
-    public CompositeDisposable getCompositeDisposable() {
+    protected CompositeDisposable getCompositeDisposable() {
         return mCompositeDisposable;
     }
 
@@ -208,7 +206,7 @@ public abstract class BaseActivity extends AppCompatActivity
 */
     }
 
-    public void setUnBinder(Unbinder unBinder) {
+    protected void setUnBinder(Unbinder unBinder) {
         mUnBinder = unBinder;
     }
 
@@ -225,7 +223,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
     protected abstract void setUp();
 
-    public void handleApiError(ANError error) {
+    protected void handleApiError(ANError error) {
 
         if (error == null || error.getErrorBody() == null) {
             onError(R.string.api_default_error);

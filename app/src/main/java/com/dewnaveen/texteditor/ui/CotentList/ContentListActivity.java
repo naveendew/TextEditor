@@ -2,8 +2,6 @@ package com.dewnaveen.texteditor.ui.CotentList;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -17,13 +15,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +32,10 @@ import com.dewnaveen.texteditor.data.network.ApiEndPoint;
 import com.dewnaveen.texteditor.ui.Portfolio.PortfolioActivity;
 import com.dewnaveen.texteditor.ui.about.AboutActivity;
 import com.dewnaveen.texteditor.ui.base.BaseActivity;
-import com.dewnaveen.texteditor.ui.custom.RoundedImageView;
 import com.dewnaveen.texteditor.ui.main.MainActivity;
 import com.dewnaveen.texteditor.utils.AppLogger;
-import com.google.gson.Gson;
 import com.sdsmdg.tastytoast.TastyToast;
 
-import android.widget.TextView;
-import android.widget.Toast;
 import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 
@@ -64,9 +55,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.realm.Realm;
 
 
 public class ContentListActivity extends BaseActivity {
@@ -101,8 +89,14 @@ public class ContentListActivity extends BaseActivity {
     private List<Data> modelList = new ArrayList<>();
 
     @Inject
-    public AppCompatActivity activity;
-    public List<Data> mContentListResponse = new ArrayList<Data>();
+    AppCompatActivity activity;
+
+    private List<Data> mContentListResponse = new ArrayList<>();
+
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, ContentListActivity.class);
+        return intent;
+    }
 
 
     @Override
@@ -149,26 +143,20 @@ public class ContentListActivity extends BaseActivity {
         setAdapter();
         getContentListData();
 
-        swipeRefreshRecyclerList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        swipeRefreshRecyclerList.setOnRefreshListener(() -> {
 
-                // Do your stuff on refresh
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+            // Do your stuff on refresh
+            new Handler().postDelayed(() -> {
 
-                        if (swipeRefreshRecyclerList.isRefreshing())
-                            swipeRefreshRecyclerList.setRefreshing(false);
-                        {
-                            mAdapter.resetAdapter();
-                            getContentListData();
+                if (swipeRefreshRecyclerList.isRefreshing())
+                    swipeRefreshRecyclerList.setRefreshing(false);
+                {
+                    mAdapter.resetAdapter();
+                    getContentListData();
 
-                        }
-                    }
-                }, 2500);
+                }
+            }, 2500);
 
-            }
         });
 
     }
@@ -179,13 +167,13 @@ public class ContentListActivity extends BaseActivity {
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
-    public void unlockDrawer() {
+    private void unlockDrawer() {
         if (mDrawer != null)
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
 
-    void setupNavMenu() {
+    private void setupNavMenu() {
         View headerLayout = mNavigationView.getHeaderView(0);
 
         mNavigationView.setNavigationItemSelectedListener(
@@ -240,13 +228,13 @@ public class ContentListActivity extends BaseActivity {
     }
 
 
-    public void closeNavigationDrawer() {
+    private void closeNavigationDrawer() {
         if (mDrawer != null) {
             mDrawer.closeDrawer(Gravity.START);
         }
     }
 
-    public void onDrawerOptionAboutClick() {
+    private void onDrawerOptionAboutClick() {
         closeNavigationDrawer();
     }
 
@@ -255,11 +243,11 @@ public class ContentListActivity extends BaseActivity {
 
     }
 
-    public void onViewInitialized() {
+    private void onViewInitialized() {
     }
 
 
-    public void onNavMenuCreated() {
+    private void onNavMenuCreated() {
     }
 
     public void onDrawerRateUsClick() {
@@ -287,10 +275,10 @@ public class ContentListActivity extends BaseActivity {
         final SearchView searchView = (SearchView) MenuItemCompat
                 .getActionView(menu.findItem(R.id.action_search));
 
-        SearchManager searchManager = (SearchManager) this.getSystemService(this.SEARCH_SERVICE);
+        SearchManager searchManager = (SearchManager) this.getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
 
-        EditText searchEdit = ((EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text));
+        EditText searchEdit = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         searchEdit.setTextColor(Color.WHITE);
         searchEdit.setHintTextColor(Color.WHITE);
         searchEdit.setBackgroundColor(Color.TRANSPARENT);
@@ -298,21 +286,18 @@ public class ContentListActivity extends BaseActivity {
 
         InputFilter[] fArray = new InputFilter[2];
         fArray[0] = new InputFilter.LengthFilter(40);
-        fArray[1] = new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+        fArray[1] = (source, start, end, dest, dstart, dend) -> {
 
-                for (int i = start; i < end; i++) {
+            for (int i = start; i < end; i++) {
 
-                    if (!Character.isLetterOrDigit(source.charAt(i)))
-                        return "";
-                }
-
-
-                return null;
-
-
+                if (!Character.isLetterOrDigit(source.charAt(i)))
+                    return "";
             }
+
+
+            return null;
+
+
         };
         searchEdit.setFilters(fArray);
         View v = searchView.findViewById(android.support.v7.appcompat.R.id.search_plate);
@@ -329,7 +314,7 @@ public class ContentListActivity extends BaseActivity {
                 List<Data> filterList = new ArrayList<>();
                 if (s.length() > 0) {
                     for (int i = 0; i < mContentListResponse.size(); i++) {
-                        if (mContentListResponse.get(i).getHeader().toLowerCase().contains(s.toString().toLowerCase())) {
+                        if (mContentListResponse.get(i).getHeader().toLowerCase().contains(s.toLowerCase())) {
                             filterList.add(mContentListResponse.get(i));
                             mAdapter.updateList(filterList);
                         }
@@ -420,24 +405,21 @@ public class ContentListActivity extends BaseActivity {
 
         recyclerView.addOnScrollListener(scrollListener);
 
-        mAdapter.SetOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position, Data model) {
+        mAdapter.SetOnItemClickListener((view, position, model) -> {
 
-                Bundle bundle = new Bundle();
-                bundle.putInt("content_id", model.getId());
+            Bundle bundle = new Bundle();
+            bundle.putInt("content_id", model.getId());
 
-                Intent intent = new Intent(activity, MainActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+            Intent intent = new Intent(activity, MainActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
 
-            }
         });
 
 
     }
 
-    public void updateRealm(ContentListResponse contentListResponse) {
+    private void updateRealm(ContentListResponse contentListResponse) {
         getDataManager().upDateContentListRealm(contentListResponse);
     }
 

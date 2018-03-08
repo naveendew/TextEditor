@@ -13,35 +13,24 @@
 
 package com.dewnaveen.texteditor.ui.splash;
 
-import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
+import android.os.Handler;
 
 import com.dewnaveen.texteditor.R;
-import com.dewnaveen.texteditor.data.DataManager;
-import com.dewnaveen.texteditor.rxjava.SchedulerProvider;
+import com.dewnaveen.texteditor.ui.CotentList.ContentListActivity;
 import com.dewnaveen.texteditor.ui.base.BaseActivity;
 import com.dewnaveen.texteditor.ui.main.MainActivity;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.disposables.CompositeDisposable;
-import timber.log.Timber;
 
 
 public class SplashActivity extends BaseActivity {
 
+    private final Handler mHandler = new Handler();
+
+    private final Runnable mOpenActivityTask = () -> openContentListActivity();
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SplashActivity.class);
@@ -76,16 +65,29 @@ public class SplashActivity extends BaseActivity {
         finish();
     }
 
+    private void openContentListActivity() {
+        Intent intent = ContentListActivity.getStartIntent(SplashActivity.this);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onDestroy() {
+        mHandler.removeCallbacks(mOpenActivityTask);
         super.onDestroy();
     }
 
     @Override
     protected void setUp() {
-        openLoginActivity();
+        mHandler.removeCallbacks(mOpenActivityTask);
+        mHandler.postDelayed(mOpenActivityTask, 1200);
     }
 
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }
 

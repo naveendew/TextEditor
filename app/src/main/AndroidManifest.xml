@@ -23,7 +23,15 @@
             android:name=".ui.splash.SplashActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppThemeFullScreenActivity" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".ui.main.MainActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -31,11 +39,6 @@
             android:name=".ui.preview.PreviewActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.CotentList.ContentListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -55,7 +58,7 @@
         <activity
             android:name=".ui.Portfolio.PortfolioActivity"
             android:label="@string/title_activity_portfolio"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

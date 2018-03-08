@@ -1,8 +1,6 @@
 package com.dewnaveen.texteditor.ui.Portfolio;
 
-import java.util.ArrayList;
-
-public class AbstractModel {
+class AbstractModel {
 
     private String title;
 
